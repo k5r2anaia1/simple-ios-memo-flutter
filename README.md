@@ -40,9 +40,27 @@ lib/
 
 ### Prerequisites
 
--   [Flutter SDK](https://docs.flutter.dev/get-started/install) installed
--   **Xcode** (for iOS development on macOS)
--   **CocoaPods** (if running on iOS)
+To run this app on iOS (Simulator or Physical Device), you need a macOS environment with the following tools installed:
+
+1.  **Xcode**: Essential for iOS development.
+    *   Install from the **Mac App Store**.
+    *   Or download from [developer.apple.com](https://developer.apple.com/download/all/).
+    *   After installation, run this command to accept the license:
+        ```bash
+        sudo xcodebuild -license
+        ```
+
+2.  **CocoaPods**: Dependency manager for Swift/Objective-C projects.
+    *   Install using Homebrew (Recommended):
+        ```bash
+        brew install cocoapods
+        ```
+    *   Or using RubyGems (Alternative):
+        ```bash
+        sudo gem install cocoapods
+        ```
+
+3.  **Flutter SDK**: [Install Flutter](https://docs.flutter.dev/get-started/install/macos) and add it to your PATH.
 
 ### 1. Clone the Repository
 
