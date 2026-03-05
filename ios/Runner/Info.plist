@@ -53,5 +53,21 @@
 	<string>We need access to your camera to capture photos and videos for your memos.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone to record voice memos.</string>
+	<!-- Added missing permissions for complete multimedia support -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need permission to save images to your photo library.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need access to your media library to play audio files.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>We need permission to recognize speech for voice memos.</string>
+
+    <!-- App Lifecycle Support -->
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict/>
+    </dict>
 </dict>
 </plist>
