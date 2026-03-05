@@ -58,31 +58,29 @@ class _EditScreenState extends State<EditScreen> {
   }
 
   void _deleteMemo() {
-    if (widget.memo != null) {
-      showCupertinoDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-          title: const Text('메모 삭제'),
-          content: const Text('이 메모를 삭제하시겠습니까?'),
-          actions: [
-            CupertinoDialogAction(
-              child: const Text('취소'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              child: const Text('삭제'),
-              onPressed: () {
-                Provider.of<MemoProvider>(context, listen: false)
-                    .deleteMemo(widget.memo!.id);
-                Navigator.of(context).pop(); // Close dialog
-                Navigator.of(context).pop(); // Close screen
-              },
-            ),
-          ],
-        ),
-      );
-    }
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('메모 삭제'),
+        content: const Text('이 메모를 삭제하시겠습니까?'),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('취소'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            child: const Text('삭제'),
+            onPressed: () {
+              Provider.of<MemoProvider>(context, listen: false)
+                  .deleteMemo(widget.memo!.id);
+              Navigator.of(context).pop(); // Close dialog
+              Navigator.of(context).pop(); // Close screen
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -114,7 +112,12 @@ class _EditScreenState extends State<EditScreen> {
                 maxLength: 50,
               ),
             ),
-            const Divider(height: 1),
+            // Divider removed because Cupertino doesn't have a const Divider like Material easily mixable here without explicit material import usage or just using a Container.
+            // Using a Container for the line instead to stay "Cupertino-ish" and avoid const issues.
+            Container(
+              height: 1,
+              color: CupertinoColors.separator,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -133,7 +136,7 @@ class _EditScreenState extends State<EditScreen> {
             // Bottom toolbar
             Container(
               padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(top: BorderSide(color: CupertinoColors.separator)),
               ),
               child: Row(

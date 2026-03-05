@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; // Material for some widgets if needed, but trying to stick to Cupertino
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../models/memo.dart';
@@ -36,83 +35,88 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            const CupertinoSliverNavigationBar(
-              largeTitle: Text('메모'),
-              trailing: Icon(CupertinoIcons.ellipsis_circle),
-            ),
-          ];
-        },
-        body: Consumer<MemoProvider>(
-          builder: (context, memoProvider, child) {
-            final memos = memoProvider.memos.where((memo) {
-              return memo.title.toLowerCase().contains(_searchQuery) ||
-                     memo.content.toLowerCase().contains(_searchQuery);
-            }).toList();
+      child: Stack(
+        children: [
+          NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                const CupertinoSliverNavigationBar(
+                  largeTitle: Text('메모'),
+                  trailing: Icon(CupertinoIcons.ellipsis_circle),
+                ),
+              ];
+            },
+            body: Consumer<MemoProvider>(
+              builder: (context, memoProvider, child) {
+                final memos = memoProvider.memos.where((memo) {
+                  return memo.title.toLowerCase().contains(_searchQuery) ||
+                         memo.content.toLowerCase().contains(_searchQuery);
+                }).toList();
 
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: CupertinoSearchTextField(
-                    controller: _searchController,
-                    placeholder: '검색',
-                  ),
-                ),
-                Expanded(
-                  child: memos.isEmpty
-                      ? const Center(
-                          child: Text(
-                            '메모가 없습니다.',
-                            style: TextStyle(color: CupertinoColors.systemGrey),
-                          ),
-                        )
-                      : ListView.separated(
-                          padding: const EdgeInsets.all(16.0),
-                          itemCount: memos.length,
-                          separatorBuilder: (context, index) => const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final memo = memos[index];
-                            return _buildMemoCard(context, memo);
-                          },
-                        ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0, right: 16.0),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              CupertinoPageRoute(builder: (context) => const EditScreen()),
-            );
-          },
-          child: Container(
-            width: 56,
-            height: 56,
-            decoration: const BoxDecoration(
-              color: CupertinoColors.systemYellow,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: CupertinoColors.systemGrey4,
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            child: const Icon(
-              CupertinoIcons.add,
-              color: CupertinoColors.white,
-              size: 32,
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: CupertinoSearchTextField(
+                        controller: _searchController,
+                        placeholder: '검색',
+                      ),
+                    ),
+                    Expanded(
+                      child: memos.isEmpty
+                          ? const Center(
+                              child: Text(
+                                '메모가 없습니다.',
+                                style: TextStyle(color: CupertinoColors.systemGrey),
+                              ),
+                            )
+                          : ListView.separated(
+                              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 80.0), // Bottom padding for FAB
+                              itemCount: memos.length,
+                              separatorBuilder: (context, index) => const SizedBox(height: 12),
+                              itemBuilder: (context, index) {
+                                final memo = memos[index];
+                                return _buildMemoCard(context, memo);
+                              },
+                            ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
-        ),
+          Positioned(
+            bottom: 16.0,
+            right: 16.0,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  CupertinoPageRoute(builder: (context) => const EditScreen()),
+                );
+              },
+              child: Container(
+                width: 56,
+                height: 56,
+                decoration: const BoxDecoration(
+                  color: CupertinoColors.systemYellow,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: CupertinoColors.systemGrey4,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  CupertinoIcons.add,
+                  color: CupertinoColors.white,
+                  size: 32,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
