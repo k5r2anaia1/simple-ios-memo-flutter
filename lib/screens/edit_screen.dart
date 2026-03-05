@@ -34,7 +34,7 @@ class _EditScreenState extends State<EditScreen> {
   List<String> _drawingPaths = [];
 
   final ImagePicker _picker = ImagePicker();
-  final AudioRecorder _audioRecorder = AudioRecorder();
+  final Record _audioRecorder = Record(); // Changed from AudioRecorder to Record for v4 compatibility
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool _isRecording = false;
 
@@ -84,7 +84,11 @@ class _EditScreenState extends State<EditScreen> {
       if (!_isRecording) {
         final directory = await getApplicationDocumentsDirectory();
         final path = '${directory.path}/${const Uuid().v4()}.m4a';
-        await _audioRecorder.start(const RecordConfig(), path: path);
+        // Updated start call for record v4
+        await _audioRecorder.start(
+          path: path,
+          encoder: AudioEncoder.aacLc,
+        );
         setState(() {
           _isRecording = true;
         });

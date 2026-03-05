@@ -16,7 +16,7 @@ dependencies:
   uuid: ^4.3.3
   image_picker: ^1.0.7
   video_player: ^2.8.3
-  record: ^5.0.0
+  record: ^4.4.4  # Changed from ^5.0.0 to ^4.4.4 for stability and compatibility
   audioplayers: ^6.0.0
   signature: ^5.5.0
   permission_handler: ^11.3.0
